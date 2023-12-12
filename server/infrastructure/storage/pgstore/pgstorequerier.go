@@ -12,13 +12,13 @@ type Querier interface {
 	// insert a new exercise
 	CreateExercise(ctx context.Context, exerciseName string) (int64, error)
 	// insert new exercise sets
-	CreateSet(ctx context.Context, arg CreateSetParams) (GowebappSet, error)
+	CreateSet(ctx context.Context, arg CreateSetParams) (EtrackerappSet, error)
 	// insert a new image
-	CreateUserImage(ctx context.Context, arg CreateUserImageParams) (GowebappImage, error)
+	CreateUserImage(ctx context.Context, arg CreateUserImageParams) (EtrackerappImage, error)
 	// insert new user
-	CreateUsers(ctx context.Context, arg CreateUsersParams) (GowebappUser, error)
+	CreateUsers(ctx context.Context, arg CreateUsersParams) (EtrackerappUser, error)
 	// insert new workouts
-	CreateWorkout(ctx context.Context, arg CreateWorkoutParams) (GowebappWorkout, error)
+	CreateWorkout(ctx context.Context, arg CreateWorkoutParams) (EtrackerappWorkout, error)
 	// delete a particular exercise
 	DeleteExercise(ctx context.Context, exerciseID int64) error
 	// delete a particular exercise sets
@@ -30,7 +30,7 @@ type Querier interface {
 	// delete a particular user
 	DeleteUsers(ctx context.Context, userID int64) error
 	// get users of a particular user_id
-	GetUser(ctx context.Context, userID int64) (GowebappUser, error)
+	GetUser(ctx context.Context, userID int64) (EtrackerappUser, error)
 	// get a particular user image
 	GetUserImage(ctx context.Context, userID int64) (GetUserImageRow, error)
 	// get a particular user information, exercise sets and workouts
@@ -38,17 +38,17 @@ type Querier interface {
 	// get a particular user information and workouts
 	GetUserWorkout(ctx context.Context, userID int64) ([]GetUserWorkoutRow, error)
 	// get all exercises ordered by the exercise name
-	ListExercises(ctx context.Context) ([]GowebappExercise, error)
+	ListExercises(ctx context.Context) ([]EtrackerappExercise, error)
 	// get all images ordered by the id
-	ListImages(ctx context.Context) ([]GowebappImage, error)
+	ListImages(ctx context.Context) ([]EtrackerappImage, error)
 	// get all exercise sets ordered by weight
-	ListSets(ctx context.Context) ([]GowebappSet, error)
+	ListSets(ctx context.Context) ([]EtrackerappSet, error)
 	// get all users ordered by the username
-	ListUsers(ctx context.Context) ([]GowebappUser, error)
+	ListUsers(ctx context.Context) ([]EtrackerappUser, error)
 	// get all workouts ordered by id
-	ListWorkouts(ctx context.Context) ([]GowebappWorkout, error)
+	ListWorkouts(ctx context.Context) ([]EtrackerappWorkout, error)
 	// insert a sets id
-	UpdateSet(ctx context.Context, arg UpdateSetParams) (GowebappSet, error)
+	UpdateSet(ctx context.Context, arg UpdateSetParams) (EtrackerappSet, error)
 	// insert or update exercise of a particular id
 	UpsertExercise(ctx context.Context, exerciseName string) (int64, error)
 	// insert or update image of a particular id

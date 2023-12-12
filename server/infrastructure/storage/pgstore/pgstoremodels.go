@@ -9,25 +9,25 @@ import (
 	"time"
 )
 
-type GowebappExercise struct {
+type EtrackerappExercise struct {
 	ExerciseID   int64  `db:"exercise_id" json:"exerciseId"`
 	ExerciseName string `db:"exercise_name" json:"exerciseName"`
 }
 
-type GowebappImage struct {
+type EtrackerappImage struct {
 	ImageID     int64  `db:"image_id" json:"imageId"`
 	UserID      int64  `db:"user_id" json:"userId"`
 	ContentType string `db:"content_type" json:"contentType"`
 	ImageData   []byte `db:"image_data" json:"imageData"`
 }
 
-type GowebappSet struct {
+type EtrackerappSet struct {
 	SetID      int64 `db:"set_id" json:"setId"`
 	ExerciseID int64 `db:"exercise_id" json:"exerciseId"`
 	Weight     int32 `db:"weight" json:"weight"`
 }
 
-type GowebappUser struct {
+type EtrackerappUser struct {
 	UserID       int64           `db:"user_id" json:"userId"`
 	UserName     string          `db:"user_name" json:"userName"`
 	PassWordHash string          `db:"pass_word_hash" json:"passWordHash"`
@@ -37,7 +37,7 @@ type GowebappUser struct {
 	IsEnabled    bool            `db:"is_enabled" json:"isEnabled"`
 }
 
-type GowebappWorkout struct {
+type EtrackerappWorkout struct {
 	WorkoutID  int64     `db:"workout_id" json:"workoutId"`
 	SetID      int64     `db:"set_id" json:"setId"`
 	UserID     int64     `db:"user_id" json:"userId"`

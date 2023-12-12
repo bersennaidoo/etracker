@@ -26,6 +26,13 @@ postgresup:
 postgresdown:
 	docker stop testpgdb  || true && 	docker rm testpgdb || true
 
+migrate-up:
+	migrate -path server/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose up
+
+migrate-down:
+	migrate -path server/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose down
+
+
 psql:
 	docker exec -it testpgdb psql $(PSQLURL)
 
