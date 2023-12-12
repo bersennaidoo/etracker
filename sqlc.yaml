@@ -1,0 +1,20 @@
+---
+version: "1"
+packages:
+- name: "pgstore"
+  path: "server/infrastructure/storage/pgstore"
+  queries: "./server/infrastructure/storage/pgstore/query"
+  schema: "./server/infrastructure/storage/pgstore/schema/"
+  engine: "postgresql"
+  emit_db_tags: true
+  emit_prepared_queries: true
+  emit_interface: true
+  emit_exact_table_names: false
+  emit_empty_slices: false
+  emit_exported_queries: false
+  emit_json_tags: true
+  json_tags_case_style: "camel"
+  output_db_file_name: "pgstore.go"
+  output_models_file_name: "pgstoremodels.go"
+  output_querier_file_name: "pgstorequerier.go"
+  output_files_suffix: "_gen"
