@@ -2,19 +2,19 @@ package conn
 
 import (
 	"database/sql"
-	"log"
 
+	"github.com/bersennaidoo/etracker/server/infrastructure/logger"
 	_ "github.com/lib/pq"
 )
 
 func NewPGCON(dbUri string) *sql.DB {
 	db, err := sql.Open("postgres", dbUri)
 	if err != nil {
-		panic(err)
+		logger.Logger.Errorf("Error opening database: %s", err.Error())
 	}
 
 	if err := db.Ping(); err != nil {
-		log.Fatalln("Error from database ping:", err)
+		logger.Logger.Errorf("Error from database ping: %s", err.Error())
 	}
 
 	return db
