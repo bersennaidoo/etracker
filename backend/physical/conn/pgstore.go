@@ -3,7 +3,7 @@ package conn
 import (
 	"database/sql"
 
-	"github.com/bersennaidoo/etracker/server/infrastructure/logger"
+	"github.com/bersennaidoo/etracker/backend/infrastructure/logger"
 	_ "github.com/lib/pq"
 )
 

@@ -4,14 +4,14 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/bersennaidoo/etracker/server/infrastructure/logger"
-	"github.com/bersennaidoo/etracker/server/infrastructure/storage/pgstore"
-	"github.com/bersennaidoo/etracker/server/physical/config"
-	"github.com/bersennaidoo/etracker/server/physical/conn"
+	"github.com/bersennaidoo/etracker/backend/infrastructure/logger"
+	"github.com/bersennaidoo/etracker/backend/infrastructure/storage/pgstore"
+	"github.com/bersennaidoo/etracker/backend/physical/config"
+	"github.com/bersennaidoo/etracker/backend/physical/conn"
 )
 
 func main() {
-	l := flag.Bool("local", true, "true - send to stdout, false - send to logging server")
+	l := flag.Bool("local", false, "true - send to stdout, false - send to logging server")
 	flag.Parse()
 
 	logger.SetLoggingOutput(*l)

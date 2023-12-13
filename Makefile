@@ -27,10 +27,10 @@ postgresdown:
 	docker stop testpgdb  || true && 	docker rm testpgdb || true
 
 migrate-up:
-	migrate -path server/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose up
+	migrate -path backend/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose up
 
 migrate-down:
-	migrate -path server/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose down
+	migrate -path backend/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose down
 
 
 psql:
@@ -38,7 +38,7 @@ psql:
 
 # task to create database without typing it manually
 createdb:
-	docker exec -it testpgdb psql $(PSQLURL) -c "\i /usr/share/infra/server/infrastructure/storage/pgstore/schema/schema.sql"
+	docker exec -it testpgdb psql 
 
 teardown_recreate: postgresdown postgresup
 	sleep 5
