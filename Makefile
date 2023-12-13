@@ -33,14 +33,14 @@ migrate-down:
 	migrate -path backend/infrastructure/storage/pgstore/migrations -database "postgresql://postgres:bersen@localhost/postgres?sslmode=disable" -verbose down
 
 docker-compose-up:
-	docker compose -f backend/infrastructure/docker/docker-compose.yml up -d
+	docker compose -f docker-compose.yml up -d
 
 docker-compose-down:
-	docker compose -f backend/infrastructure/docker/docker-compose.yml down
+	docker compose -f docker-compose.yml down
 
 prom-run:
 	docker run --name prom \
-		-v $PWD/backend/infrastructure/prom/prometheus.yml:/etc/prometheus/prometheus.yml \
+		-v ./backend/infrastructure/prom/config.yml:/etc/prometheus/prometheus.yml \
 		-p 9090:9090 --add-host=host.docker.internal:host-gateway prom/prometheus:v2.29.2
 
 jaeger-run: 

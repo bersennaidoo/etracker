@@ -1,17 +1,13 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
-	"log"
 
 	"github.com/bersennaidoo/etracker/backend/infrastructure/logger"
 	"github.com/bersennaidoo/etracker/backend/infrastructure/storage/pgstore"
 	"github.com/bersennaidoo/etracker/backend/physical/config"
 	"github.com/bersennaidoo/etracker/backend/physical/conn"
-	m "github.com/bersennaidoo/etracker/backend/physical/opentelem/metric"
-	t "github.com/bersennaidoo/etracker/backend/physical/opentelem/trace"
 )
 
 const serviceName = "etracker"
@@ -20,7 +16,7 @@ func main() {
 	l := flag.Bool("local", false, "true - send to stdout, false - send to logging server")
 	flag.Parse()
 
-	sTracing, err := t.InitTracing(serviceName)
+	/*sTracing, err := t.InitTracing(serviceName)
 	if err != nil {
 		log.Fatalf("Failed to setup tracing: %v\n", err)
 	}
@@ -30,7 +26,7 @@ func main() {
 		}
 	}()
 
-	sMetrics, err := m.InitMetrics(serviceName)
+	/*sMetrics, err := m.InitMetrics(serviceName)
 	if err != nil {
 		log.Fatalf("Failed to setup metrics: %v\n", err)
 	}
@@ -38,7 +34,7 @@ func main() {
 		if err := sMetrics(context.Background()); err != nil {
 			log.Printf("Failed to shutdown metrics: %v\n", err)
 		}
-	}()
+	}()*/
 
 	logger.SetLoggingOutput(*l)
 
