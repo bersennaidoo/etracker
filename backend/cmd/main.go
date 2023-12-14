@@ -22,26 +22,6 @@ func main() {
 	l := flag.Bool("local", false, "true - send to stdout, false - send to logging server")
 	flag.Parse()
 
-	/*sTracing, err := t.InitTracing(serviceName)
-	if err != nil {
-		log.Fatalf("Failed to setup tracing: %v\n", err)
-	}
-	defer func() {
-		if err := sTracing(context.Background()); err != nil {
-			log.Printf("Failed to shutdown tracing: %v\n", err)
-		}
-	}()
-
-	/*sMetrics, err := m.InitMetrics(serviceName)
-	if err != nil {
-		log.Fatalf("Failed to setup metrics: %v\n", err)
-	}
-	defer func() {
-		if err := sMetrics(context.Background()); err != nil {
-			log.Printf("Failed to shutdown metrics: %v\n", err)
-		}
-	}()*/
-
 	logger.SetLoggingOutput(*l)
 
 	logger.Logger.Debugf("Application logging to stdout = %v", *l)
@@ -56,6 +36,8 @@ func main() {
 	)
 
 	dbcl := conn.NewPGCON(dbURI)
+
+	//util.CreateUserInDb(dbcl)
 
 	logger.Logger.Info("Database connection fine")
 
