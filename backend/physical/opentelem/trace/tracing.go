@@ -1,4 +1,4 @@
-package trace
+/*package trace
 
 import (
 	"context"
@@ -31,4 +31,4 @@ func InitTracing(service string) (ShutdownTracing, error) {
 
 	otel.SetTracerProvider(tp)
 	return tp.Shutdown, nil
-}
+}*/

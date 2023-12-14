@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/bersennaidoo/etracker/backend/application/rest/router"
+	"github.com/bersennaidoo/etracker/backend/application/rest/server"
 	"github.com/bersennaidoo/etracker/backend/infrastructure/logger"
 	"github.com/bersennaidoo/etracker/backend/infrastructure/storage/pgstore"
 	"github.com/bersennaidoo/etracker/backend/physical/config"
@@ -54,5 +56,11 @@ func main() {
 	logger.Logger.Info("Database connection fine")
 
 	_ = pgstore.New(dbcl)
+
+	router := router.New()
+	srv := server.New(config.GetAsInt("SERVER_PORT", 3000), router)
+
+	logger.Logger.Info("Server Started on :3000")
+	srv.MustStart()
 
 }

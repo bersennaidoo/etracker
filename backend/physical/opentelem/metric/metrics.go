@@ -1,6 +1,6 @@
 package metric
 
-import (
+/*import (
 	"context"
 	"net/http"
 
@@ -44,4 +44,4 @@ func InitMetrics(service string) (ShutdownMetrics, error) {
 	}()
 
 	return srv.Shutdown, nil
-}
+}*/
