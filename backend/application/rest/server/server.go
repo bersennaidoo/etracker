@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/bersennaidoo/etracker/backend/application/rest/router"
-	"github.com/gorilla/mux"
 )
 
 type Server struct {
@@ -27,13 +26,6 @@ func New(port int, router *router.Router) *Server {
 		router: router,
 		port:   fmt.Sprintf(":%d", port),
 	}
-}
-
-func (c *Server) AddRoute(path string, handler http.HandlerFunc, method string, mwf ...mux.MiddlewareFunc) {
-	subRouter := c.router.Mux.PathPrefix(path).Subrouter()
-	subRouter.Use(mwf...)
-	subRouter.HandleFunc("", handler).Methods(method)
-	log.Printf("Added route: [%v] [%v]", path, method)
 }
 
 // MustStart will start the server and if it cannot bind to the port

@@ -9,52 +9,27 @@ import (
 )
 
 type Querier interface {
-	// insert a new exercise
-	CreateExercise(ctx context.Context, exerciseName string) (int64, error)
-	// insert new exercise sets
-	CreateSet(ctx context.Context, arg CreateSetParams) (EtrackerappSet, error)
-	// insert a new image
+	CreateDefaultSetForExercise(ctx context.Context, arg CreateDefaultSetForExerciseParams) (EtrackerappSet, error)
+	CreateSetForExercise(ctx context.Context, arg CreateSetForExerciseParams) (EtrackerappSet, error)
+	CreateUserDefaultExercise(ctx context.Context) error
+	CreateUserExercise(ctx context.Context, arg CreateUserExerciseParams) (interface{}, error)
 	CreateUserImage(ctx context.Context, arg CreateUserImageParams) (EtrackerappImage, error)
-	// insert new user
+	CreateUserWorkout(ctx context.Context, userID int64) (EtrackerappWorkout, error)
 	CreateUsers(ctx context.Context, arg CreateUsersParams) (EtrackerappUser, error)
-	// insert new workouts
-	CreateWorkout(ctx context.Context, arg CreateWorkoutParams) (EtrackerappWorkout, error)
-	// delete a particular exercise
-	DeleteExercise(ctx context.Context, exerciseID int64) error
-	// delete a particular exercise sets
-	DeleteSets(ctx context.Context, setID int64) error
-	// delete a particular user's image
+	DeleteUserExercise(ctx context.Context, arg DeleteUserExerciseParams) error
 	DeleteUserImage(ctx context.Context, userID int64) error
-	// delete a particular user's workouts
 	DeleteUserWorkouts(ctx context.Context, userID int64) error
-	// delete a particular user
 	DeleteUsers(ctx context.Context, userID int64) error
-	// get users of a particular user_id
+	DeleteWorkoutByIDForUser(ctx context.Context, arg DeleteWorkoutByIDForUserParams) error
 	GetUser(ctx context.Context, userID int64) (EtrackerappUser, error)
-	// get a particular user image
+	GetUserByName(ctx context.Context, userName string) (EtrackerappUser, error)
 	GetUserImage(ctx context.Context, userID int64) (GetUserImageRow, error)
-	// get a particular user information, exercise sets and workouts
-	GetUserSets(ctx context.Context, userID int64) ([]GetUserSetsRow, error)
-	// get a particular user information and workouts
-	GetUserWorkout(ctx context.Context, userID int64) ([]GetUserWorkoutRow, error)
-	// get all exercises ordered by the exercise name
-	ListExercises(ctx context.Context) ([]EtrackerappExercise, error)
-	// get all images ordered by the id
+	GetWorkoutsForUserID(ctx context.Context, userID int64) ([]GetWorkoutsForUserIDRow, error)
 	ListImages(ctx context.Context) ([]EtrackerappImage, error)
-	// get all exercise sets ordered by weight
-	ListSets(ctx context.Context) ([]EtrackerappSet, error)
-	// get all users ordered by the username
+	ListUserExercises(ctx context.Context, userID int64) ([]string, error)
 	ListUsers(ctx context.Context) ([]EtrackerappUser, error)
-	// get all workouts ordered by id
-	ListWorkouts(ctx context.Context) ([]EtrackerappWorkout, error)
-	// insert a sets id
 	UpdateSet(ctx context.Context, arg UpdateSetParams) (EtrackerappSet, error)
-	// insert or update exercise of a particular id
-	UpsertExercise(ctx context.Context, exerciseName string) (int64, error)
-	// insert or update image of a particular id
 	UpsertUserImage(ctx context.Context, imageData []byte) (int64, error)
-	// insert or update workouts based of a particular ID
-	UpsertWorkout(ctx context.Context, arg UpsertWorkoutParams) (int64, error)
 }
 
 var _ Querier = (*Queries)(nil)

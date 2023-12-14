@@ -24,26 +24,29 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
-	if q.createExerciseStmt, err = db.PrepareContext(ctx, createExercise); err != nil {
-		return nil, fmt.Errorf("error preparing query CreateExercise: %w", err)
+	if q.createDefaultSetForExerciseStmt, err = db.PrepareContext(ctx, createDefaultSetForExercise); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateDefaultSetForExercise: %w", err)
 	}
-	if q.createSetStmt, err = db.PrepareContext(ctx, createSet); err != nil {
-		return nil, fmt.Errorf("error preparing query CreateSet: %w", err)
+	if q.createSetForExerciseStmt, err = db.PrepareContext(ctx, createSetForExercise); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateSetForExercise: %w", err)
+	}
+	if q.createUserDefaultExerciseStmt, err = db.PrepareContext(ctx, createUserDefaultExercise); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateUserDefaultExercise: %w", err)
+	}
+	if q.createUserExerciseStmt, err = db.PrepareContext(ctx, createUserExercise); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateUserExercise: %w", err)
 	}
 	if q.createUserImageStmt, err = db.PrepareContext(ctx, createUserImage); err != nil {
 		return nil, fmt.Errorf("error preparing query CreateUserImage: %w", err)
 	}
+	if q.createUserWorkoutStmt, err = db.PrepareContext(ctx, createUserWorkout); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateUserWorkout: %w", err)
+	}
 	if q.createUsersStmt, err = db.PrepareContext(ctx, createUsers); err != nil {
 		return nil, fmt.Errorf("error preparing query CreateUsers: %w", err)
 	}
-	if q.createWorkoutStmt, err = db.PrepareContext(ctx, createWorkout); err != nil {
-		return nil, fmt.Errorf("error preparing query CreateWorkout: %w", err)
-	}
-	if q.deleteExerciseStmt, err = db.PrepareContext(ctx, deleteExercise); err != nil {
-		return nil, fmt.Errorf("error preparing query DeleteExercise: %w", err)
-	}
-	if q.deleteSetsStmt, err = db.PrepareContext(ctx, deleteSets); err != nil {
-		return nil, fmt.Errorf("error preparing query DeleteSets: %w", err)
+	if q.deleteUserExerciseStmt, err = db.PrepareContext(ctx, deleteUserExercise); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteUserExercise: %w", err)
 	}
 	if q.deleteUserImageStmt, err = db.PrepareContext(ctx, deleteUserImage); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteUserImage: %w", err)
@@ -54,58 +57,59 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.deleteUsersStmt, err = db.PrepareContext(ctx, deleteUsers); err != nil {
 		return nil, fmt.Errorf("error preparing query DeleteUsers: %w", err)
 	}
+	if q.deleteWorkoutByIDForUserStmt, err = db.PrepareContext(ctx, deleteWorkoutByIDForUser); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteWorkoutByIDForUser: %w", err)
+	}
 	if q.getUserStmt, err = db.PrepareContext(ctx, getUser); err != nil {
 		return nil, fmt.Errorf("error preparing query GetUser: %w", err)
+	}
+	if q.getUserByNameStmt, err = db.PrepareContext(ctx, getUserByName); err != nil {
+		return nil, fmt.Errorf("error preparing query GetUserByName: %w", err)
 	}
 	if q.getUserImageStmt, err = db.PrepareContext(ctx, getUserImage); err != nil {
 		return nil, fmt.Errorf("error preparing query GetUserImage: %w", err)
 	}
-	if q.getUserSetsStmt, err = db.PrepareContext(ctx, getUserSets); err != nil {
-		return nil, fmt.Errorf("error preparing query GetUserSets: %w", err)
-	}
-	if q.getUserWorkoutStmt, err = db.PrepareContext(ctx, getUserWorkout); err != nil {
-		return nil, fmt.Errorf("error preparing query GetUserWorkout: %w", err)
-	}
-	if q.listExercisesStmt, err = db.PrepareContext(ctx, listExercises); err != nil {
-		return nil, fmt.Errorf("error preparing query ListExercises: %w", err)
+	if q.getWorkoutsForUserIDStmt, err = db.PrepareContext(ctx, getWorkoutsForUserID); err != nil {
+		return nil, fmt.Errorf("error preparing query GetWorkoutsForUserID: %w", err)
 	}
 	if q.listImagesStmt, err = db.PrepareContext(ctx, listImages); err != nil {
 		return nil, fmt.Errorf("error preparing query ListImages: %w", err)
 	}
-	if q.listSetsStmt, err = db.PrepareContext(ctx, listSets); err != nil {
-		return nil, fmt.Errorf("error preparing query ListSets: %w", err)
+	if q.listUserExercisesStmt, err = db.PrepareContext(ctx, listUserExercises); err != nil {
+		return nil, fmt.Errorf("error preparing query ListUserExercises: %w", err)
 	}
 	if q.listUsersStmt, err = db.PrepareContext(ctx, listUsers); err != nil {
 		return nil, fmt.Errorf("error preparing query ListUsers: %w", err)
 	}
-	if q.listWorkoutsStmt, err = db.PrepareContext(ctx, listWorkouts); err != nil {
-		return nil, fmt.Errorf("error preparing query ListWorkouts: %w", err)
-	}
 	if q.updateSetStmt, err = db.PrepareContext(ctx, updateSet); err != nil {
 		return nil, fmt.Errorf("error preparing query UpdateSet: %w", err)
 	}
-	if q.upsertExerciseStmt, err = db.PrepareContext(ctx, upsertExercise); err != nil {
-		return nil, fmt.Errorf("error preparing query UpsertExercise: %w", err)
-	}
 	if q.upsertUserImageStmt, err = db.PrepareContext(ctx, upsertUserImage); err != nil {
 		return nil, fmt.Errorf("error preparing query UpsertUserImage: %w", err)
-	}
-	if q.upsertWorkoutStmt, err = db.PrepareContext(ctx, upsertWorkout); err != nil {
-		return nil, fmt.Errorf("error preparing query UpsertWorkout: %w", err)
 	}
 	return &q, nil
 }
 
 func (q *Queries) Close() error {
 	var err error
-	if q.createExerciseStmt != nil {
-		if cerr := q.createExerciseStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing createExerciseStmt: %w", cerr)
+	if q.createDefaultSetForExerciseStmt != nil {
+		if cerr := q.createDefaultSetForExerciseStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createDefaultSetForExerciseStmt: %w", cerr)
 		}
 	}
-	if q.createSetStmt != nil {
-		if cerr := q.createSetStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing createSetStmt: %w", cerr)
+	if q.createSetForExerciseStmt != nil {
+		if cerr := q.createSetForExerciseStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createSetForExerciseStmt: %w", cerr)
+		}
+	}
+	if q.createUserDefaultExerciseStmt != nil {
+		if cerr := q.createUserDefaultExerciseStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createUserDefaultExerciseStmt: %w", cerr)
+		}
+	}
+	if q.createUserExerciseStmt != nil {
+		if cerr := q.createUserExerciseStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createUserExerciseStmt: %w", cerr)
 		}
 	}
 	if q.createUserImageStmt != nil {
@@ -113,24 +117,19 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing createUserImageStmt: %w", cerr)
 		}
 	}
+	if q.createUserWorkoutStmt != nil {
+		if cerr := q.createUserWorkoutStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createUserWorkoutStmt: %w", cerr)
+		}
+	}
 	if q.createUsersStmt != nil {
 		if cerr := q.createUsersStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing createUsersStmt: %w", cerr)
 		}
 	}
-	if q.createWorkoutStmt != nil {
-		if cerr := q.createWorkoutStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing createWorkoutStmt: %w", cerr)
-		}
-	}
-	if q.deleteExerciseStmt != nil {
-		if cerr := q.deleteExerciseStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing deleteExerciseStmt: %w", cerr)
-		}
-	}
-	if q.deleteSetsStmt != nil {
-		if cerr := q.deleteSetsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing deleteSetsStmt: %w", cerr)
+	if q.deleteUserExerciseStmt != nil {
+		if cerr := q.deleteUserExerciseStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteUserExerciseStmt: %w", cerr)
 		}
 	}
 	if q.deleteUserImageStmt != nil {
@@ -148,9 +147,19 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing deleteUsersStmt: %w", cerr)
 		}
 	}
+	if q.deleteWorkoutByIDForUserStmt != nil {
+		if cerr := q.deleteWorkoutByIDForUserStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteWorkoutByIDForUserStmt: %w", cerr)
+		}
+	}
 	if q.getUserStmt != nil {
 		if cerr := q.getUserStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing getUserStmt: %w", cerr)
+		}
+	}
+	if q.getUserByNameStmt != nil {
+		if cerr := q.getUserByNameStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getUserByNameStmt: %w", cerr)
 		}
 	}
 	if q.getUserImageStmt != nil {
@@ -158,19 +167,9 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing getUserImageStmt: %w", cerr)
 		}
 	}
-	if q.getUserSetsStmt != nil {
-		if cerr := q.getUserSetsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getUserSetsStmt: %w", cerr)
-		}
-	}
-	if q.getUserWorkoutStmt != nil {
-		if cerr := q.getUserWorkoutStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getUserWorkoutStmt: %w", cerr)
-		}
-	}
-	if q.listExercisesStmt != nil {
-		if cerr := q.listExercisesStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing listExercisesStmt: %w", cerr)
+	if q.getWorkoutsForUserIDStmt != nil {
+		if cerr := q.getWorkoutsForUserIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getWorkoutsForUserIDStmt: %w", cerr)
 		}
 	}
 	if q.listImagesStmt != nil {
@@ -178,9 +177,9 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing listImagesStmt: %w", cerr)
 		}
 	}
-	if q.listSetsStmt != nil {
-		if cerr := q.listSetsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing listSetsStmt: %w", cerr)
+	if q.listUserExercisesStmt != nil {
+		if cerr := q.listUserExercisesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing listUserExercisesStmt: %w", cerr)
 		}
 	}
 	if q.listUsersStmt != nil {
@@ -188,29 +187,14 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing listUsersStmt: %w", cerr)
 		}
 	}
-	if q.listWorkoutsStmt != nil {
-		if cerr := q.listWorkoutsStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing listWorkoutsStmt: %w", cerr)
-		}
-	}
 	if q.updateSetStmt != nil {
 		if cerr := q.updateSetStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing updateSetStmt: %w", cerr)
 		}
 	}
-	if q.upsertExerciseStmt != nil {
-		if cerr := q.upsertExerciseStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing upsertExerciseStmt: %w", cerr)
-		}
-	}
 	if q.upsertUserImageStmt != nil {
 		if cerr := q.upsertUserImageStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing upsertUserImageStmt: %w", cerr)
-		}
-	}
-	if q.upsertWorkoutStmt != nil {
-		if cerr := q.upsertWorkoutStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing upsertWorkoutStmt: %w", cerr)
 		}
 	}
 	return err
@@ -250,59 +234,55 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                     DBTX
-	tx                     *sql.Tx
-	createExerciseStmt     *sql.Stmt
-	createSetStmt          *sql.Stmt
-	createUserImageStmt    *sql.Stmt
-	createUsersStmt        *sql.Stmt
-	createWorkoutStmt      *sql.Stmt
-	deleteExerciseStmt     *sql.Stmt
-	deleteSetsStmt         *sql.Stmt
-	deleteUserImageStmt    *sql.Stmt
-	deleteUserWorkoutsStmt *sql.Stmt
-	deleteUsersStmt        *sql.Stmt
-	getUserStmt            *sql.Stmt
-	getUserImageStmt       *sql.Stmt
-	getUserSetsStmt        *sql.Stmt
-	getUserWorkoutStmt     *sql.Stmt
-	listExercisesStmt      *sql.Stmt
-	listImagesStmt         *sql.Stmt
-	listSetsStmt           *sql.Stmt
-	listUsersStmt          *sql.Stmt
-	listWorkoutsStmt       *sql.Stmt
-	updateSetStmt          *sql.Stmt
-	upsertExerciseStmt     *sql.Stmt
-	upsertUserImageStmt    *sql.Stmt
-	upsertWorkoutStmt      *sql.Stmt
+	db                              DBTX
+	tx                              *sql.Tx
+	createDefaultSetForExerciseStmt *sql.Stmt
+	createSetForExerciseStmt        *sql.Stmt
+	createUserDefaultExerciseStmt   *sql.Stmt
+	createUserExerciseStmt          *sql.Stmt
+	createUserImageStmt             *sql.Stmt
+	createUserWorkoutStmt           *sql.Stmt
+	createUsersStmt                 *sql.Stmt
+	deleteUserExerciseStmt          *sql.Stmt
+	deleteUserImageStmt             *sql.Stmt
+	deleteUserWorkoutsStmt          *sql.Stmt
+	deleteUsersStmt                 *sql.Stmt
+	deleteWorkoutByIDForUserStmt    *sql.Stmt
+	getUserStmt                     *sql.Stmt
+	getUserByNameStmt               *sql.Stmt
+	getUserImageStmt                *sql.Stmt
+	getWorkoutsForUserIDStmt        *sql.Stmt
+	listImagesStmt                  *sql.Stmt
+	listUserExercisesStmt           *sql.Stmt
+	listUsersStmt                   *sql.Stmt
+	updateSetStmt                   *sql.Stmt
+	upsertUserImageStmt             *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                     tx,
-		tx:                     tx,
-		createExerciseStmt:     q.createExerciseStmt,
-		createSetStmt:          q.createSetStmt,
-		createUserImageStmt:    q.createUserImageStmt,
-		createUsersStmt:        q.createUsersStmt,
-		createWorkoutStmt:      q.createWorkoutStmt,
-		deleteExerciseStmt:     q.deleteExerciseStmt,
-		deleteSetsStmt:         q.deleteSetsStmt,
-		deleteUserImageStmt:    q.deleteUserImageStmt,
-		deleteUserWorkoutsStmt: q.deleteUserWorkoutsStmt,
-		deleteUsersStmt:        q.deleteUsersStmt,
-		getUserStmt:            q.getUserStmt,
-		getUserImageStmt:       q.getUserImageStmt,
-		getUserSetsStmt:        q.getUserSetsStmt,
-		getUserWorkoutStmt:     q.getUserWorkoutStmt,
-		listExercisesStmt:      q.listExercisesStmt,
-		listImagesStmt:         q.listImagesStmt,
-		listSetsStmt:           q.listSetsStmt,
-		listUsersStmt:          q.listUsersStmt,
-		listWorkoutsStmt:       q.listWorkoutsStmt,
-		updateSetStmt:          q.updateSetStmt,
-		upsertExerciseStmt:     q.upsertExerciseStmt,
-		upsertUserImageStmt:    q.upsertUserImageStmt,
-		upsertWorkoutStmt:      q.upsertWorkoutStmt,
+		db:                              tx,
+		tx:                              tx,
+		createDefaultSetForExerciseStmt: q.createDefaultSetForExerciseStmt,
+		createSetForExerciseStmt:        q.createSetForExerciseStmt,
+		createUserDefaultExerciseStmt:   q.createUserDefaultExerciseStmt,
+		createUserExerciseStmt:          q.createUserExerciseStmt,
+		createUserImageStmt:             q.createUserImageStmt,
+		createUserWorkoutStmt:           q.createUserWorkoutStmt,
+		createUsersStmt:                 q.createUsersStmt,
+		deleteUserExerciseStmt:          q.deleteUserExerciseStmt,
+		deleteUserImageStmt:             q.deleteUserImageStmt,
+		deleteUserWorkoutsStmt:          q.deleteUserWorkoutsStmt,
+		deleteUsersStmt:                 q.deleteUsersStmt,
+		deleteWorkoutByIDForUserStmt:    q.deleteWorkoutByIDForUserStmt,
+		getUserStmt:                     q.getUserStmt,
+		getUserByNameStmt:               q.getUserByNameStmt,
+		getUserImageStmt:                q.getUserImageStmt,
+		getWorkoutsForUserIDStmt:        q.getWorkoutsForUserIDStmt,
+		listImagesStmt:                  q.listImagesStmt,
+		listUserExercisesStmt:           q.listUserExercisesStmt,
+		listUsersStmt:                   q.listUsersStmt,
+		updateSetStmt:                   q.updateSetStmt,
+		upsertUserImageStmt:             q.upsertUserImageStmt,
 	}
 }

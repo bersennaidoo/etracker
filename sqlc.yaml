@@ -2,9 +2,9 @@
 version: "1"
 packages:
 - name: "pgstore"
-  path: "server/infrastructure/storage/pgstore"
-  queries: "./server/infrastructure/storage/pgstore/query"
-  schema: "./server/infrastructure/storage/pgstore/migrations/"
+  path: "backend/infrastructure/storage/pgstore"
+  queries: "./backend/infrastructure/storage/pgstore/query"
+  schema: "./backend/infrastructure/storage/pgstore/migrations/"
   engine: "postgresql"
   emit_db_tags: true
   emit_prepared_queries: true

@@ -10,3 +10,6 @@
 [INFO] 2023/12/14 12:07 Starting the application...
 [INFO] 2023/12/14 12:07 Database connection fine
 [INFO] 2023/12/14 12:07 Server Started on :3000
+[INFO] 2023/12/14 14:24 Starting the application...
+[INFO] 2023/12/14 14:24 Database connection fine
+[INFO] 2023/12/14 14:24 Server Started on :3000

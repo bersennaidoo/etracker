@@ -10,7 +10,7 @@ import (
 )
 
 type EtrackerappExercise struct {
-	ExerciseID   int64  `db:"exercise_id" json:"exerciseId"`
+	UserID       int64  `db:"user_id" json:"userId"`
 	ExerciseName string `db:"exercise_name" json:"exerciseName"`
 }
 
@@ -22,15 +22,19 @@ type EtrackerappImage struct {
 }
 
 type EtrackerappSet struct {
-	SetID      int64 `db:"set_id" json:"setId"`
-	ExerciseID int64 `db:"exercise_id" json:"exerciseId"`
-	Weight     int32 `db:"weight" json:"weight"`
+	SetID        int64  `db:"set_id" json:"setId"`
+	WorkoutID    int64  `db:"workout_id" json:"workoutId"`
+	ExerciseName string `db:"exercise_name" json:"exerciseName"`
+	Weight       int32  `db:"weight" json:"weight"`
+	Set1         int64  `db:"set1" json:"set1"`
+	Set2         int64  `db:"set2" json:"set2"`
+	Set3         int64  `db:"set3" json:"set3"`
 }
 
 type EtrackerappUser struct {
 	UserID       int64           `db:"user_id" json:"userId"`
 	UserName     string          `db:"user_name" json:"userName"`
-	PassWordHash string          `db:"pass_word_hash" json:"passWordHash"`
+	PasswordHash string          `db:"password_hash" json:"passwordHash"`
 	Name         string          `db:"name" json:"name"`
 	Config       json.RawMessage `db:"config" json:"config"`
 	CreatedAt    time.Time       `db:"created_at" json:"createdAt"`
@@ -38,9 +42,7 @@ type EtrackerappUser struct {
 }
 
 type EtrackerappWorkout struct {
-	WorkoutID  int64     `db:"workout_id" json:"workoutId"`
-	SetID      int64     `db:"set_id" json:"setId"`
-	UserID     int64     `db:"user_id" json:"userId"`
-	ExerciseID int64     `db:"exercise_id" json:"exerciseId"`
-	StartDate  time.Time `db:"start_date" json:"startDate"`
+	WorkoutID int64     `db:"workout_id" json:"workoutId"`
+	UserID    int64     `db:"user_id" json:"userId"`
+	StartDate time.Time `db:"start_date" json:"startDate"`
 }
